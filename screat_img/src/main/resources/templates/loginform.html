@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Secreat image storage</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<div class="container">
+    <header id="logo">
+        <h1>비밀 이미지 저장소</h1>
+        <p>당신의 비밀 이미지를 안전하게 보관하세요.</p>
+    </header>
+
+    <main>
+        <!-- Login Section -->
+        <section class="login-section">
+            <h2>로그인</h2>
+            서비스를 사용하려면 로그인이 필요합니다.
+            <form id="login-form"  th:action="@{/login}" method="POST">
+                <label for="username">Id</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                <br>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+                <button type="submit">Login</button>
+            </form>
+            아이디가 없으신가요?
+            <button type="button" onclick="gosign_up()" id="sig"class="btn btn-dark">회원가입</button>
+        </section>
+
+    </main>
+    <script>function gosign_up(){window.location.href="signUp";}</script>
+    <footer>
+        <p>&copy; 2024 Secret Image Repository. All rights reserved.</p>
+    </footer>
+</div>
+
+</body>
+</html>

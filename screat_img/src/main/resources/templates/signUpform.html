@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+</head>
+<body>
+<header id="logo">
+    <span id="scr">비밀</span>
+    <span id="imst">이미지 저장소</span>
+</header>
+
+<main>
+    <form id="sign_up" method="POST" th:action="@{/user}" >
+        <h2>회원가입</h2>
+        <div th:if="${message}">
+            <p th:text="${message}"></p>
+        </div>
+        아이디:<input type="text" id="username" name="username">
+        <br>
+        비밀번호:<input type="password" id="password" name="password">
+        <br>
+        <div id='buttons'>
+            <button type="submit" id="sign" class="btn btn-dark">회원가입</button>
+        </div>
+    </form>
+    <button type="button" onclick="gologin()" id="sig" class="btn btn-dark">로그인 페이지로</button>
+</main>
+<script>
+    function gologin() {
+        window.location.href = "/loginform";
+    }
+</script>
+</body>
+</html>

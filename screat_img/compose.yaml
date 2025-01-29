@@ -1,0 +1,30 @@
+services:
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 
+      MYSQL_DATABASE: scrimg
+      MYSQL_USER: 
+      MYSQL_PASSWORD: 
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  springboot-app:
+    build:
+      context: .
+    ports:
+      - "8443:8443"
+    depends_on:
+      - mariadb
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb:3306/scrimg
+      SPRING_DATASOURCE_USERNAME: 
+      SPRING_DATASOURCE_PASSWORD: 
+    volumes:
+      - ./resources/userUploadImgs:/app/userUploadImgs
+      #- ./resources/keystore.p12:/config  # keystore.p12 파일 경로 매핑
+
+volumes:
+  mariadb_data:
