@@ -17,14 +17,16 @@ Springboot(java17), MariaDB, Docker, OpenSSL
 
 
 ## 로그인 및 회원가입
-![image](https://github.com/user-attachments/assets/6b4213b5-bada-420c-b118-303280e941b0)
+<img width="722" height="712" alt="image" src="https://github.com/user-attachments/assets/4b356c73-4ed7-4cc1-ad9b-26c9e0201ed7" />
+
 
 - 첫화면은 로그인페이지로 리다이렉트 하였고 스프링시큐리티의 form로그인 기능 사용
 - 회원가입을 하면 아이디는 그대로, 비밀번호는 해쉬함수를 거친 뒤 해쉬값으로 데이터베이스에 저장
 
 
 ## 이미지 업로드 섹션
-![image](https://github.com/user-attachments/assets/442a214a-8c65-460e-8986-94ca521921f1)
+<img width="993" height="586" alt="image" src="https://github.com/user-attachments/assets/df3daa85-3948-426d-b9eb-0b6a1b38694f" />
+
 
  암호화할 이미지 파일을 선택하고 해당 이미지의 이름, 이미지를 암호화할 비밀번호를 입력하여 업로드 버튼을 누르면 아래와 같이 수행
 1) 이미지파일을 base64로 인코딩
@@ -32,7 +34,8 @@ Springboot(java17), MariaDB, Docker, OpenSSL
 3) 암호화된 이미지 스트링과 이미지 이름은 백엔드를 거쳐 DB에 저장
 
 ## 이미지 열람하기 섹션
-![image](https://github.com/user-attachments/assets/d3d6f145-7594-4757-b2ec-de1aa82e3d3c)
+<img width="989" height="518" alt="image" src="https://github.com/user-attachments/assets/50335b40-f981-4a6d-85ed-0f6a28789c43" />
+
 
 사용자의 세션에서 userid로 이미지테이블을 조회한 결과를 목록으로 띄움
 목록에서 이미지 이름을 클릭하면 이미지가 선택되고 이미지를 암호화할 때 사용했던 비밀번호를 
