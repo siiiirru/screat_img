@@ -2,133 +2,169 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Secret Image Vault</title>
     <style>
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
+            padding: 0;
+            background: #f9fafb;
+            color: #333;
         }
-        .upload, .view,h3,header{
-            padding-left: 5%;
-            width: 90%;
+
+        header {
+            background-color: #4f46e5;
+            color: white;
+            padding: 2rem;
             text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-bottom-left-radius: 2rem;
+            border-bottom-right-radius: 2rem;
         }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="file"] {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #4f46e5;
+            color: white;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #4338ca;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
         #displayedImage {
+            display: block;
             max-width: 100%;
             height: auto;
-            display: block;
-            margin: 20px auto; /* 화면 중앙 정렬 */
-            border: 1px solid black;
-            box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+            margin: 2rem auto;
+            border: 1px solid #ccc;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .vform {
-            padding-left: 35%;
-            text-align: left;
-            border: 1px solid #000; /* 테두리 추가 */
-            border-radius: 10px; /* 모서리를 둥글게 만듦 */
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-        }
-        h2 {
-            padding: 10px;
-        }
-        button {
 
-            margin-top: 10px;
-            margin-bottom: 10px;
-            margin-left: 10%;
-            padding: 20px 30px; /* 버튼 여백 */
-            font-size: 20px; /* 폰트 크기 */
-            color: black; /* 버튼 글자 색 */
-            border: none; /* 버튼 테두리 제거 */
-            border-radius: 8px; /* 버튼 모서리 둥글게 */
-            cursor: pointer; /* 마우스 포인터 변경 */
-            transition: background-color 0.3s ease; /* 마우스 호버 효과 */
-            box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
-        }
-        .upload button{
-            background-color: lightgreen;
-        }
-        .view button{
-            background-color: skyblue;
-        }
-        .upload h2 {
-            background-color: lightgreen; /* 연두색 */
-        }
-        .view h2 {
-            background-color: skyblue; /* 노랑색 */
-        }
-        .instructions {
-            color: red; /* 텍스트를 빨간색으로 설정 */
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #f3f4f6;
+            font-size: 0.9rem;
+            color: #6b7280;
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.js"></script>
 </head>
 <body>
-<header id="logo">
+<header>
     <h1>비밀 이미지 저장소</h1>
     <p>당신의 비밀 이미지를 안전하게 보관하세요.</p>
 </header>
-<!-- Actions Section -->
-<h3><span th:text="${session.user.username}">User</span>님 안녕하십니까!</h3>
-<section class="upload">
+<main>
+    <h3><span th:text="${session.user.username}">User</span>님 안녕하세요!</h3>
 
-    <h2>이미지 업로드하기</h2>
-    <div class="form">
-        <form id="uploadimg" onsubmit="encryptAndUpload(event)" method="POST" >
-            <div class="vform">
-            <label for="img">암호화할 이미지 파일: </label>
+    <section>
+        <h2>이미지 업로드</h2>
+        <form id="uploadimg" onsubmit="encryptAndUpload(event)" method="POST">
+            <label for="img">암호화할 이미지 파일:</label>
             <input type="file" id="img" name="img" required>
-            <br>
-            <label for="imgname">이미지 이름: </label>
+
+            <label for="imgname">이미지 이름:</label>
             <input type="text" id="imgname" name="imgname" required>
-            <br>
-            <label for="password">이미지 암호화 비밀번호: </label>
+
+            <label for="password">암호화 비밀번호:</label>
             <input type="password" id="password" name="password" required>
-            <br>
 
             <button type="submit">이미지 업로드</button>
-            </div>
         </form>
-<hr>
-    </div>
-</section>
-<section class="view">
-    <h2>이미지 열람하기</h2>
-    <div class="form">
-        <form id="viewimg" th:action="@{/img}" method="GET" enctype="multipart/form-data">
-            <h3>이미지 목록</h3>
-            <p class="instructions">열람할 이미지의 이름을 클릭한 후 비밀번호를 입력하고 버튼을 누르세요.</p>
-            <div>
-                <ul>
-                    <!-- 이미지 목록 출력 -->
-                    <li th:each="image : ${images}">
-                        <!-- 이미지 클릭 시 showPasswordPrompt로 id와 imgname 전달 -->
-                        <a href="#"
-                           th:text = "${image.imgname}"
-                           th:data-id="${image.id}"
-                           th:data-name="${image.imgname}"
-                           onclick="handleClick(this)">[Click to View]</a>
-                    </li>
-                </ul>
-            </div>
-        </form>
-            <div class="vform">
-            선택한 이미지: <span id="selectedImageName">없음</span>
-            </br>
-            선택한 이미지 비밀번호 :
-                <input type="password" id="decpassword" name = "decpassword" placeholder="암호화 비밀번호 입력">
-                <br>
+    </section>
 
+    <section>
+        <h2>이미지 열람</h2>
+        <form id="viewimg" th:action="@{/img}" method="GET">
+            <h3>이미지 목록</h3>
+            <p style="color:red">열람할 이미지 이름을 클릭하고 비밀번호를 입력하세요.</p>
+            <ul>
+                <li th:each="image : ${images}">
+                    <a href="#" th:text="${image.imgname}" th:data-id="${image.id}" th:data-name="${image.imgname}" onclick="handleClick(this)">[Click to View]</a>
+                </li>
+            </ul>
+        </form>
+        <div>
+            <p>선택한 이미지: <span id="selectedImageName">없음</span></p>
+            <label for="decpassword">이미지 비밀번호:</label>
+            <input type="password" id="decpassword" name="decpassword">
             <button onclick="viewImage()">이미지 보기</button>
-            </div>
-    </div>
-</section>
-<div>
+        </div>
+    </section>
+
     <img id="displayedImage" src="" alt="이미지 로딩 중...">
-</div>
+</main>
+<footer>
+    &copy; 2024 Secret Image Repository. All rights reserved.
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.js"></script>
 <script>
     function encryptAndUpload(event) {
-        event.preventDefault(); // 폼의 기본 제출 동작을 막음
-
+        event.preventDefault();
         const imgInput = document.getElementById('img');
         const imgFile = imgInput.files[0];
         const password = document.getElementById('password').value;
@@ -139,57 +175,32 @@
             return;
         }
 
-        // 파일을 읽고
         const reader = new FileReader();
         reader.onload = function (event) {
-            const base64Data = event.target.result.split(',')[1];  // base64 data만 추출
-
-            // AES알고리즘으로 base64 인코딩된 이미지를 암호화하여 String형식으로 출력
+            const base64Data = event.target.result.split(',')[1];
             const encryptedData = CryptoJS.AES.encrypt(base64Data, password).toString();
-            const jsonData = JSON.stringify({
-                imgname: imgname,
-                img: encryptedData
-            });
+            const jsonData = JSON.stringify({ imgname: imgname, img: encryptedData });
 
-            // Ajax를 통해 서버로 JSON 전송
             fetch('/upload', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json' // JSON 전송을 알리기 위한 헤더 설정
-                },
-                body: jsonData // JSON으로 데이터를 보냄
+                headers: { 'Content-Type': 'application/json' },
+                body: jsonData
             })
-                .then(response => {
-                    if (response.ok) {
-                        alert('이미지가 성공적으로 업로드되었습니다.');
-                    } else {
-                        alert('업로드 실패');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('서버 오류');
-                });
+                .then(response => response.ok ? alert('업로드 성공') : alert('업로드 실패'))
+                .catch(() => alert('서버 오류'));
         };
-
-        reader.readAsDataURL(imgFile); // 파일을 Base64 형식으로 읽기
+        reader.readAsDataURL(imgFile);
     }
+
     let selectedImageId = "";
     let selectedImageName = "";
-    function handleClick(element) {
-        const id = element.getAttribute('data-id');
-        const name = element.getAttribute('data-name');
-        showPasswordPrompt(id, name);
-    }
 
-    // 이미지 클릭 시 id와 imgname을 저장
-    function showPasswordPrompt(imageId, imageName) {
-        selectedImageId = imageId;
-        selectedImageName = imageName;
+    function handleClick(element) {
+        selectedImageId = element.getAttribute('data-id');
+        selectedImageName = element.getAttribute('data-name');
         document.getElementById('selectedImageName').textContent = selectedImageName;
     }
 
-    // 비밀번호를 통해 이미지 복호화 후 화면에 표시
     async function viewImage() {
         event.preventDefault();
         const password = document.getElementById("decpassword").value;
@@ -200,29 +211,20 @@
         }
 
         try {
-            // 암호화된 이미지 데이터를 서버에서 불러오기
-            const response = await fetch(`/img?imageId=${selectedImageId}`, {
-                method: 'GET',
-            });
+            const response = await fetch(`/img?imageId=${selectedImageId}`);
             if (!response.ok) {
-                alert('이미지 파일을 찾을 수 없습니다.');
+                alert('이미지를 찾을 수 없습니다.');
                 return;
             }
 
-            // 서버에서 가져온 암호화된 이미지 데이터
             const base64Image = await response.text();
-
-            // 2. AES 복호화
             const bytes = CryptoJS.AES.decrypt(base64Image, password);
             const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
 
-            // 이미지를 화면에 표시
             const imgElement = document.getElementById("displayedImage");
             imgElement.src = "data:image/png;base64," + decryptedData;
-
         } catch (error) {
-            console.error("Error:", error);
-            alert('이미지 복호화 중 오류가 발생했습니다.');
+            alert('복호화 실패');
         }
     }
 </script>
